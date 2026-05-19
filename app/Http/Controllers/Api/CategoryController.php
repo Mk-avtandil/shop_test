@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
-use App\Models\Category;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\StoreCategoryRequest;
+use Illuminate\Http\JsonResponse;
+use App\Models\Category;
 
 class CategoryController
 {
+    // TODO: HTTP статус коды пока не добавлены, laravel возвращает их автоматически
     public function index(): LengthAwarePaginator
     {
         return Category::paginate(5);

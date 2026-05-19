@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreProfileRequest;
-use App\Http\Requests\UpdateProfileRequest;
-use App\Models\Profile;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\StoreProfileRequest;
+use Illuminate\Http\JsonResponse;
+use App\Models\Profile;
 
 class ProfileController
 {

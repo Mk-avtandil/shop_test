@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
-use App\Models\Order;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\StoreOrderRequest;
+use Illuminate\Http\JsonResponse;
+use App\Models\Order;
 
 class OrderController
 {
