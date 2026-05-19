@@ -11,8 +11,6 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['nullable', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:20'],
         ];
     }
