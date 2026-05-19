@@ -16,7 +16,6 @@
         <th scope="col">phone_number</th>
         <th scope="col"></th>
         <th scope="col"></th>
-        <th scope="col"></th>
     </tr>
     </thead>
     @foreach($profiles as $profile)
@@ -25,7 +24,6 @@
             <td>{{ $profile->user->name }}</td>
             <td>{{ $profile->user->email }}</td>
             <td>{{ $profile->phone_number }}</td>
-            <td><a href="#" class="btn btn-primary w-100">User orders</a></td>
             <td><a href="{{ route('profiles.edit', $profile) }}" class="btn btn-info">Edit</a></td>
             <td>
                 <form action="{{ route('profiles.destroy', $profile) }}" method="POST">

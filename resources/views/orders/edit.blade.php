@@ -12,22 +12,14 @@
 
             <div class="form-group mb-3">
                 <label for="user_id">User</label>
-                <select name="user_id" id="user_id" class="form-control" required>
-                    <option value="">Select User</option>
-
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}"
-                            {{ $user->id == $order->user_id ? 'selected' : '' }}>
-                            {{ $user->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <input type="text" value="{{ $order->user->name }}" class="form-control" disabled>
+                <input type="hidden" name="user_id" value="{{ $order->user_id }}">
             </div>
 
             <div class="form-group mb-3">
                 <label for="total_price">Total price</label>
                 <input type="text" name="total_price" id="total_price" value="{{ $order->total_price }}"
-                       class="form-control" required>
+                       class="form-control" disabled>
             </div>
 
             @php

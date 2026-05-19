@@ -12,7 +12,7 @@ class ProductController
 {
     public function index(): LengthAwarePaginator
     {
-        return Product::paginate(5);
+        return Product::with('category')->paginate(5);
     }
 
     public function store(StoreProductRequest $request): Product

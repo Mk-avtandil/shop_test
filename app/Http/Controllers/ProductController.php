@@ -11,7 +11,6 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-
     public function index(): View
     {
         $products = Product::with('category')->paginate(5);

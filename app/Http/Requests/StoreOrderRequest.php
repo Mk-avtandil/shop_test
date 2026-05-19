@@ -11,8 +11,8 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'total_price' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'string', 'in:pending,processing,shipped,delivered,cancelled'],
+            'products' => ['required', 'array'],
         ];
     }
 }

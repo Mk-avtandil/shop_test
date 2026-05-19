@@ -12,7 +12,7 @@ class ProfileController
 {
     public function index(): LengthAwarePaginator
     {
-        return Profile::paginate(5);
+        return Profile::with('user')->paginate(5);
     }
 
     public function store(StoreProfileRequest $request): Profile

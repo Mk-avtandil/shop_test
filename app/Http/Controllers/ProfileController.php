@@ -20,7 +20,7 @@ class ProfileController extends Controller
 
     public function create(): View
     {
-        $users = User::all();
+        $users = User::doesntHave('profile')->get();
 
         return view('profiles.create', ['users' => $users]);
     }

@@ -14,6 +14,7 @@
         <th scope="col">user</th>
         <th scope="col">total price</th>
         <th scope="col">status</th>
+        <th scope="col">products</th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
@@ -24,6 +25,15 @@
             <td>{{ $order->user->name }}</td>
             <td>{{ $order->total_price }}</td>
             <td>{{ $order->status }}</td>
+            <td>
+                @foreach($order->products as $product)
+                    <div>
+                        {{ $product->name }}
+                        (x{{ $product->pivot->quantity }}) -
+                        {{ $product->price }} $
+                    </div>
+                @endforeach
+            </td>
             <td><a href="{{ route('orders.edit', $order) }}" class="btn btn-info">Edit</a></td>
             <td>
                 <form action="{{ route('orders.destroy', $order) }}" method="POST">
