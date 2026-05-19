@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\StoreCategoryRequest;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class CategoryController extends Controller
+class CategoryController
 {
     public function index(): LengthAwarePaginator
     {
-        return Category::paginate(10);
+        return Category::paginate(5);
     }
 
     public function store(StoreCategoryRequest $request): Category
@@ -23,11 +23,6 @@ class CategoryController extends Controller
     public function show(Category $category): Category
     {
         return $category;
-    }
-
-    public function edit(Category $category)
-    {
-        //
     }
 
     public function update(UpdateCategoryRequest $request, Category $category): Category

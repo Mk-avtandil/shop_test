@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\StoreProductRequest;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class ProductController extends Controller
+class ProductController
 {
     public function index(): LengthAwarePaginator
     {
-        return Product::paginate(10);
+        return Product::paginate(5);
     }
 
     public function store(StoreProductRequest $request): Product
@@ -23,11 +23,6 @@ class ProductController extends Controller
     public function show(Product $product): Product
     {
         return $product;
-    }
-
-    public function edit(Product $product)
-    {
-        //
     }
 
     public function update(UpdateProductRequest $request, Product $product): Product

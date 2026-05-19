@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -8,11 +8,11 @@ use App\Models\Order;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class OrderController extends Controller
+class OrderController
 {
     public function index(): LengthAwarePaginator
     {
-        return Order::paginate(10);
+        return Order::paginate(5);
     }
 
     public function store(StoreOrderRequest $request): Order
@@ -23,11 +23,6 @@ class OrderController extends Controller
     public function show(Order $order): Order
     {
         return $order;
-    }
-
-    public function edit(Order $order)
-    {
-
     }
 
     public function update(UpdateOrderRequest $request, Order $order): Order

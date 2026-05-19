@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
@@ -8,11 +8,11 @@ use App\Models\Profile;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ProfileController extends Controller
+class ProfileController
 {
     public function index(): LengthAwarePaginator
     {
-        return Profile::paginate(10);
+        return Profile::paginate(5);
     }
 
     public function store(StoreProfileRequest $request): Profile
@@ -23,11 +23,6 @@ class ProfileController extends Controller
     public function show(Profile $profile): Profile
     {
         return $profile;
-    }
-
-    public function edit(Profile $profile)
-    {
-        //
     }
 
     public function update(UpdateProfileRequest $request, Profile $profile): Profile
