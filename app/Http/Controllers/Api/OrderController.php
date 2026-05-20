@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\OrderService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
@@ -16,38 +17,25 @@ class OrderController
         return Order::with(['user', 'products'])->paginate(5);
     }
 
-    public function store(StoreOrderRequest $request): Order
+    public function store(StoreOrderRequest $request, OrderService $orderService): JsonResponse
     {
-        $data = $request->validated();
+        try {
+            $order = $orderService->createOrder(
+                $request->validated(),
+                $request->input('products', [])
+            );
 
-        $order = Order::create([
-            'user_id' => $data['user_id'],
-            'status' => $data['status'],
-            'total_price' => 0,
-        ]);
+            return response()->json([
+                'success' => true,
+                'data' => $order->load('products')
+            ], 201);
 
-        $syncData = [];
-        $total = 0;
-
-        foreach ($request->products as $productId => $qty) {
-
-            $product = Product::find($productId);
-
-            $syncData[$productId] = [
-                'quantity' => $qty,
-                'price' => $product->price,
-            ];
-
-            $total += $product->price * $qty;
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 422);
         }
-
-        $order->products()->sync($syncData);
-
-        $order->update([
-            'total_price' => $total
-        ]);
-
-        return $order->load('products');
     }
 
     public function show(Order $order): Order

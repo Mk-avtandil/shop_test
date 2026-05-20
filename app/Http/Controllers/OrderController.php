@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Product;
+use App\Services\OrderService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller;
 use App\Models\Order;
@@ -28,51 +29,22 @@ class OrderController extends Controller
         return view('orders.create', ['users' => $users, 'products' => $products]);
     }
 
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request, OrderService $orderService)
     {
-        $data = $request->validated();
+        try {
+            $orderService->createOrder(
+                $request->validated(),
+                $request->input('products', [])
+            );
 
-        DB::transaction(function () use ($request, $data, &$order) {
+            return redirect()->route('orders.index')
+                ->with('success', 'Order created successfully');
 
-            $order = Order::create([
-                'user_id' => $data['user_id'],
-                'total_price' => 0,
-                'status' => $data['status'],
-            ]);
-
-            $syncData = [];
-            $total = 0;
-
-            foreach ($request->products as $productId => $qty) {
-
-                if ($qty <= 0) continue;
-
-                $product = Product::lockForUpdate()->find($productId);
-
-                if ($product->stock < $qty) {
-                    throw new \Exception("Not enough stock for {$product->name}");
-                }
-
-                $product->stock -= $qty;
-                $product->save();
-
-                $syncData[$productId] = [
-                    'quantity' => $qty,
-                    'price' => $product->price,
-                ];
-
-                $total += $product->price * $qty;
-            }
-
-            $order->products()->sync($syncData);
-
-            $order->update([
-                'total_price' => $total
-            ]);
-        });
-
-        return redirect()->route('orders.index')
-            ->with('success', 'Order created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     public function edit(Order $order): View
